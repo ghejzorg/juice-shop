@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2014-2025 Bjoern Kimminich & the OWASP Juice Shop contributors.
+ * Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
-import { Component, Inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { DOCUMENT } from '@angular/common'
 import { dom } from '@fortawesome/fontawesome-svg-core'
@@ -21,11 +21,13 @@ dom.watch()
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  standalone: true,
   imports: [MatSidenavContainer, MatSidenav, SidenavComponent, NavbarComponent, ServerStartedNotificationComponent, ChallengeSolvedNotificationComponent, WelcomeComponent, RouterOutlet]
 })
 export class AppComponent {
-  constructor (@Inject(DOCUMENT) private readonly _document: HTMLDocument, private readonly translate: TranslateService) {
+  private readonly _document = inject<HTMLDocument>(DOCUMENT);
+  private readonly translate = inject(TranslateService);
+
+  constructor () {
     this.translate.setDefaultLang('en')
   }
 }
